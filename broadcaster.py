@@ -53,7 +53,7 @@ class Broadcaster:
             query = question[1].strip()
             print(query)
             definition = (dictionary.meaning(query))
-            self.engine.say(page.summary)
+            self.engine.say(definition)
 
 class SpotifyPlayer:
     def __init__(self):

@@ -12,8 +12,13 @@ def look_for_prompt():
         audio_text = ""
         text = ""
         r = s_r.Recognizer()
+        r.energy_threshold = 500
         with s_r.Microphone() as source:
-            audio_text = r.listen(source)
+            r.adjust_for_ambient_noise(source,duration=1)
+            try:
+                audio_text = r.listen(source)
+            except:
+                pass
         try:
             text = r.recognize_google(audio_text)
         except:
