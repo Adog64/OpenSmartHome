@@ -29,14 +29,6 @@ class Broadcaster:
         self.engine.stop()
 
     def answer(self, question):
-        if question[0] == 'date':
-            self.engine.say('the month is')
-            self.engine.say(month)
-            self.engine.say('the year is')
-            self.engine.say(year)
-            print(dateNow)
-
-
         if question[0] == 'wikipedia':
             search = wikipedia.search(question[1])[0]
             print(search)
@@ -45,14 +37,14 @@ class Broadcaster:
                 self.engine.say(wikipedia.summary(page.title, sentences=1))
             except:
                 self.engine.say('disambiguation error')
-        elif question[0] == 'anthony_play':
+        elif question[0] == 'symere_play':
             if question[1].strip() == "":
                 self.player.resume()
             else:
                 self.player.play_song(question[1])
-        elif question[0] == 'anthony_pause':
+        elif question[0] == 'symere_pause':
             self.player.pause()
-        elif question[0] == 'anthony_skip':
+        elif question[0] == 'symere_skip':
             self.player.skip()
         elif question[0] == 'lyrics':
             genius = Genius("oaCj62eaMTHV1KnlH_W0OFLxtovOtfH9-A4Q3obU36TE11it7iPQLn9rY3M4nqcU")
@@ -65,6 +57,11 @@ class Broadcaster:
             print(query)
             definition = (dictionary.meaning(query))
             self.engine.say(page.summary)
+        elif question[0] == 'date' or 'time':
+            self.engine.say('the month is')
+            self.engine.say(month)
+            self.engine.say('the year is')
+            self.engine.say(year)
         
     
 

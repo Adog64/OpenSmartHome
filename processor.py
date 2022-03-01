@@ -16,10 +16,8 @@ def process_text(text):
         return ['spotify_skip']
     elif 'sing' in words:
         return ['lyrics', text[4:]]
-        
-    elif 'date' or 'time' in words:
-        return ['date', text[4:]]
-        
+    if 'date' in words:
+        return['date', text[4:]]
         #use wikipedia
     if 'who' == words[0] or 'when' == words[0]:
         if words[1] == 'is' or words[1] == 'are'\
