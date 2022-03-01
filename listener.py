@@ -17,6 +17,7 @@ def look_for_prompt():
             r.adjust_for_ambient_noise(source,duration=1)
             try:
                 audio_text = r.listen(source)
+                print('processing query...')
             except:
                 pass
         try:

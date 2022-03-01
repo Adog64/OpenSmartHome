@@ -2,7 +2,7 @@
 
 Authors: Aidan Sharpe, Joe Pobega, & Tyler Salamon
 
-Private smart home, so big tech bros ain't spyin' on yo ass
+Private smart home, so big tech bros ain't spyin' on you
 '''
 
 import listener
