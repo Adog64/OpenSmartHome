@@ -5,9 +5,15 @@ import configparser
 from lyricsgenius import Genius
 from PyDictionary import PyDictionary
 from spotipy.oauth2 import SpotifyOAuth
+from datetime import datetime
 
+
+dateNow = datetime.now() # current date and time
+month = dateNow.strftime("%m")
+year = dateNow.strftime("%Y")
+
+dateNow = year
 dictionary=PyDictionary()
-
 wikipedia.set_lang("en")
 
 class Broadcaster:
@@ -21,8 +27,16 @@ class Broadcaster:
 
     def stop(self):
         self.engine.stop()
-    
+
     def answer(self, question):
+        if question[0] == 'date':
+            self.engine.say('the month is')
+            self.engine.say(month)
+            self.engine.say('the year is')
+            self.engine.say(year)
+            print(dateNow)
+
+
         if question[0] == 'wikipedia':
             search = wikipedia.search(question[1])[0]
             print(search)
@@ -31,29 +45,28 @@ class Broadcaster:
                 self.engine.say(wikipedia.summary(page.title, sentences=1))
             except:
                 self.engine.say('disambiguation error')
-
-        elif question[0] == 'spotify_play':
+        elif question[0] == 'anthony_play':
             if question[1].strip() == "":
                 self.player.resume()
             else:
                 self.player.play_song(question[1])
-        elif question[0] == 'spotify_pause':
+        elif question[0] == 'anthony_pause':
             self.player.pause()
-        elif question[0] == 'spotify_skip':
+        elif question[0] == 'anthony_skip':
             self.player.skip()
-
         elif question[0] == 'lyrics':
             genius = Genius("oaCj62eaMTHV1KnlH_W0OFLxtovOtfH9-A4Q3obU36TE11it7iPQLn9rY3M4nqcU")
             songs = genius.search_songs(question[1])
             url = songs['hits'][0]['result']['url']
             song_lyrics = genius.lyrics(song_url=url)
             self.engine.say(song_lyrics)
-
         elif question[0] == 'dictionary':
             query = question[1].strip()
             print(query)
             definition = (dictionary.meaning(query))
-            self.engine.say(definition)
+            self.engine.say(page.summary)
+        
+    
 
 class SpotifyPlayer:
     def __init__(self):
@@ -62,9 +75,9 @@ class SpotifyPlayer:
         scope = "user-read-playback-state,user-modify-playback-state,streaming"
 
         auth = SpotifyOAuth(
-                    client_id="2d0aa7b1e8e34e6db2bbcc9e35fd4db5",
-                    client_secret="c76ee05912fa42668927c8456d96274b",
-                    redirect_uri="http://google.com/",
+                    client_id="f504761a0a624a0f9c36ae9a5ec9deb0",
+                    client_secret="97a7e10a0b454540aecf3e7b8044442b",
+                    redirect_uri="http://localhost:9000",
                     scope=scope)
 
         token = auth.get_access_token(as_dict=False)
