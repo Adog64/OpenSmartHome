@@ -1,3 +1,4 @@
+import sys
 import wikipedia
 import pyttsx3
 import spotipy
@@ -6,6 +7,7 @@ from lyricsgenius import Genius
 from PyDictionary import PyDictionary
 from spotipy.oauth2 import SpotifyOAuth
 from datetime import datetime
+import calendar
 
 
 dateNow = datetime.now() # current date and time
@@ -37,14 +39,14 @@ class Broadcaster:
                 self.engine.say(wikipedia.summary(page.title, sentences=1))
             except:
                 self.engine.say('disambiguation error')
-        elif question[0] == 'symere_play':
+        elif question[0] == 'spotify_play':
             if question[1].strip() == "":
                 self.player.resume()
             else:
                 self.player.play_song(question[1])
-        elif question[0] == 'symere_pause':
+        elif question[0] == 'spotify_pause':
             self.player.pause()
-        elif question[0] == 'symere_skip':
+        elif question[0] == 'spotify_skip':
             self.player.skip()
         elif question[0] == 'lyrics':
             genius = Genius("oaCj62eaMTHV1KnlH_W0OFLxtovOtfH9-A4Q3obU36TE11it7iPQLn9rY3M4nqcU")
@@ -56,15 +58,13 @@ class Broadcaster:
             query = question[1].strip()
             print(query)
             definition = (dictionary.meaning(query))
-            self.engine.say(page.summary)
-        elif question[0] == 'date' or 'time':
-            self.engine.say('the month is')
-            self.engine.say(month)
-            self.engine.say('the year is')
-            self.engine.say(year)
+            self.engine.say(definition)
+        elif question[0] == 'exit':
+            sys.exit()
+        elif question[0] == 'date':
+            td = datetime.now()
+            self.engine.say(f'it is {td.strftime("%A")}, {calendar.month_name[td.month]} {td.day}, {td.year}')
         
-    
-
 class SpotifyPlayer:
     def __init__(self):
         config = configparser.ConfigParser()
@@ -72,8 +72,8 @@ class SpotifyPlayer:
         scope = "user-read-playback-state,user-modify-playback-state,streaming"
 
         auth = SpotifyOAuth(
-                    client_id="f504761a0a624a0f9c36ae9a5ec9deb0",
-                    client_secret="97a7e10a0b454540aecf3e7b8044442b",
+                    client_id="2d0aa7b1e8e34e6db2bbcc9e35fd4db5",
+                    client_secret="c76ee05912fa42668927c8456d96274b",
                     redirect_uri="http://localhost:9000",
                     scope=scope)
 

@@ -1,7 +1,3 @@
-from datetime import date
-from broadcaster import Broadcaster
-
-
 def process_text(text):
     words = []
     words = text.lower().split(' ')
@@ -16,10 +12,16 @@ def process_text(text):
         return ['spotify_skip']
     elif 'sing' in words:
         return ['lyrics', text[4:]]
-    if 'date' in words:
-        return['date', text[4:]]
-        #use wikipedia
-    if 'who' == words[0] or 'when' == words[0]:
+    elif 'date' in words:
+        return ['date']
+    elif words == 'make it sexy'.split(' '):
+        return ['spotify_play', 'careless whisper']
+    elif words == 'set the mood'.split(' '):
+        return ['spotify_play', "let's get it on"]
+    elif 'die' in words:
+        return ['exit']
+    #use wikipedia
+    elif 'who' == words[0] or 'when' == words[0]:
         if words[1] == 'is' or words[1] == 'are'\
         or words[1] == 'were' or words[1] == 'was':
             text = text[len(words[0]) + len(words[1]) + 1:]
